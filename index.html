@@ -46,6 +46,11 @@
   .ticker-badge{display:inline-block;background:#252a3a;color:var(--blue);border-radius:6px;padding:3px 8px;font-weight:700;font-size:12px}
   .tag{display:inline-block;border-radius:5px;padding:3px 9px;font-size:11px;font-weight:700;letter-spacing:.04em}
   .tag.BUY{background:#14532d;color:var(--green)}.tag.SELL{background:#450a0a;color:var(--red)}
+  .cat-badge{display:inline-block;border-radius:4px;padding:2px 7px;font-size:10px;background:#252a3a;color:var(--muted);margin-left:4px}
+  .cat-badge.open_market{color:var(--blue)}
+  .cat-badge.award{color:var(--yellow)}
+  .cat-badge.derivative{color:#c084fc}
+  .cat-badge.tax{color:#f97316}
   .num{text-align:right;font-variant-numeric:tabular-nums}
   .muted{color:var(--muted)}
   /* ── empty ── */
@@ -84,9 +89,17 @@
   <div class="filters">
     <input id="search" placeholder="🔍  Search insider name…" style="width:200px"/>
     <select id="filter-type">
-      <option value="">All Types</option>
+      <option value="">All Directions</option>
       <option value="BUY">Buys only</option>
       <option value="SELL">Sells only</option>
+    </select>
+    <select id="filter-cat">
+      <option value="">All Categories</option>
+      <option value="open_market">Open Market only</option>
+      <option value="derivative">Options / Exercises</option>
+      <option value="award">Awards / Grants</option>
+      <option value="tax">Tax Withholding</option>
+      <option value="other">Other</option>
     </select>
     <select id="filter-days">
       <option value="30">Last 30 days</option>
@@ -105,7 +118,7 @@
         <tr>
           <th data-col="ticker">Ticker</th>
           <th data-col="txn_date">Date</th>
-          <th data-col="type">Type</th>
+          <th data-col="type">Direction</th><th data-col="txn_label">Transaction</th>
           <th data-col="insider">Insider</th>
           <th data-col="role">Role</th>
           <th data-col="shares" class="num">Shares</th>
@@ -123,7 +136,7 @@
 <script>
 const PORTFOLIO = ["PLTR","NVDA","AAPL","MSFT","META","AMZN","GOOG","AVGO",
   "NOW","UNH","V","MA","MELI","PANW","FTNT","MNST",
-  "BLDR","LLY","CELH","CPRT","ASML","AXON","MPWR","APH","TQQQ"];
+  "LLY","ASML","AXON","MPWR","APH"];
 
 let ALL_TRADES = [];
 let sortCol = "txn_date", sortDir = -1;
@@ -169,12 +182,14 @@ function buildTickerPills(){
 function getFiltered(){
   const search = document.getElementById("search").value.toLowerCase();
   const type   = document.getElementById("filter-type").value;
+  const cat    = document.getElementById("filter-cat").value;
   const days   = parseInt(document.getElementById("filter-days").value);
   const cutoff = new Date(); cutoff.setDate(cutoff.getDate()-days);
   const cutStr = cutoff.toISOString().slice(0,10);
   return ALL_TRADES.filter(t => {
     if(activeTicker && t.ticker !== activeTicker) return false;
     if(type && t.type !== type) return false;
+    if(cat  && t.txn_category !== cat)  return false;
     if(t.txn_date < cutStr) return false;
     if(search && !t.insider.toLowerCase().includes(search)) return false;
     return true;
@@ -217,6 +232,7 @@ function render(){
       <td><span class="ticker-badge">${t.ticker}</span></td>
       <td>${t.txn_date}</td>
       <td><span class="tag ${t.type}">${t.type}</span></td>
+      <td>${t.txn_label||t.txn_code||"–"}<span class="cat-badge ${t.txn_category||''}">${t.txn_category||''}</span></td>
       <td>${t.insider}</td>
       <td class="muted">${t.role||"–"}</td>
       <td class="num">${fmt.num(t.shares)}</td>
@@ -250,7 +266,7 @@ document.querySelectorAll("th[data-col]").forEach(th=>{
 });
 
 // live filter
-["search","filter-type","filter-days"].forEach(id=>{
+["search","filter-type","filter-cat","filter-days"].forEach(id=>{
   document.getElementById(id).addEventListener("input", render);
   document.getElementById(id).addEventListener("change", render);
 });
