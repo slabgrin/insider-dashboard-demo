@@ -17,21 +17,35 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
 header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100}
 header h1{font-size:16px;font-weight:700}
 #updated{font-size:12px;color:var(--muted)}
-main{padding:24px;max-width:1500px;margin:0 auto}
-section{margin-bottom:36px}
-h2{font-size:15px;font-weight:700;margin-bottom:16px}
+main{padding:24px;max-width:1600px;margin:0 auto}
+section{margin-bottom:40px}
+h2{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+/* ── stat cards ── */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:28px}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
 .card .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
 .card .val{font-size:22px;font-weight:700}
 .val.g{color:var(--green)}.val.r{color:var(--red)}.val.b{color:var(--blue)}
-.ticker-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.pill{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4px 11px;font-size:12px;cursor:pointer;transition:.12s;user-select:none}
-.pill:hover{border-color:var(--blue);color:var(--blue)}
-.pill.active{background:var(--blue);color:#0a0f1e;border-color:var(--blue);font-weight:700}
-.pill.hb{box-shadow:inset 0 0 0 1px #22c55e55}
-.pill.hs{box-shadow:inset 0 0 0 1px #ef444455}
-.pill.hbs{box-shadow:inset 0 0 0 1px #facc1555}
+
+/* ── portfolio grid ── */
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.ptile{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:border-color .15s}
+.ptile:hover{border-color:#3d4460}
+.ptile.active{border-color:var(--blue)}
+.ptile-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.ptile-ticker{font-size:17px;font-weight:800;color:var(--blue)}
+.ptile-sig{border-radius:5px;padding:2px 8px;font-size:10px;font-weight:700}
+.ptile-company{font-size:11px;color:var(--muted);margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ptile-stats{display:flex;gap:10px;margin-bottom:10px;font-size:11px}
+.ptile-stats .buy{color:var(--green);font-weight:600}
+.ptile-stats .sell{color:var(--red);font-weight:600}
+.ptile-stats .trades{color:var(--muted)}
+.ptile-chart{width:100%;height:60px;position:relative}
+.ptile-chart svg{width:100%;height:100%}
+.no-activity{font-size:11px;color:var(--muted);text-align:center;line-height:60px}
+
+/* ── signal cards ── */
 .signal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
 .sc{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px}
 .sc:hover{border-color:#3d4460}
@@ -57,32 +71,11 @@ h2{font-size:15px;font-weight:700;margin-bottom:16px}
 .flag.w{color:var(--yellow)}.flag.d{color:var(--red)}.flag.g{color:var(--green)}
 .sc-commentary{font-size:12px;color:var(--muted2);line-height:1.6;border-top:1px solid var(--border);padding-top:10px}
 .sc-commentary strong{color:var(--text)}
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;align-items:center}
-.filters select,.filters input{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 11px;font-size:13px;outline:none}
-.filters select:focus,.filters input:focus{border-color:var(--blue)}
-.btn{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer}
-.btn:hover{color:var(--text);border-color:var(--muted2)}
-#count{color:var(--muted);margin-left:auto;font-size:12px}
-.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
-table{width:100%;border-collapse:collapse}
-thead tr{background:#0d1016}
-th{padding:10px 13px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);cursor:pointer;user-select:none;white-space:nowrap}
-th:hover{color:var(--text)}
-th.asc::after{content:" ▲";color:var(--blue)}th.desc::after{content:" ▼";color:var(--blue)}
-tbody tr{border-top:1px solid #1a1e2a;transition:background .1s}
-tbody tr:hover{background:var(--surface2)}
-td{padding:10px 13px;vertical-align:middle;white-space:nowrap}
-.tbadge{display:inline-block;background:#1a2035;color:var(--blue);border-radius:5px;padding:2px 7px;font-weight:700;font-size:12px}
-.tag{display:inline-block;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700}
-.tag.BUY{background:var(--green-bg);color:var(--green)}
-.tag.SELL{background:var(--red-bg);color:var(--red)}
-.sigtag{display:inline-block;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:600}
-.cat{display:inline-block;border-radius:3px;padding:1px 5px;font-size:10px;margin-left:4px;background:var(--surface2)}
-.cat.open_market{color:var(--blue)}.cat.derivative{color:var(--purple)}.cat.award{color:var(--yellow)}.cat.tax{color:var(--orange)}.cat.other{color:var(--muted)}
-.num{text-align:right;font-variant-numeric:tabular-nums}
-.dim{color:var(--muted2)}
-#empty{text-align:center;padding:50px;color:var(--muted);display:none}
 .no-sig{color:var(--muted);font-size:13px;padding:10px 0}
+
+/* ── chart expand panel ── */
+#chart-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-top:12px;display:none}
+#chart-panel h3{font-size:14px;font-weight:700;margin-bottom:14px;color:var(--text)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.1/dist/apexcharts.min.js"></script>
 </head>
@@ -92,6 +85,7 @@ td{padding:10px 13px;vertical-align:middle;white-space:nowrap}
   <span id="updated">Loading…</span>
 </header>
 <main>
+  <!-- stat tiles -->
   <div class="stats">
     <div class="card"><div class="lbl">Total Trades</div><div class="val b" id="s-total">–</div></div>
     <div class="card"><div class="lbl">Buys</div><div class="val g" id="s-buys">–</div></div>
@@ -100,106 +94,66 @@ td{padding:10px 13px;vertical-align:middle;white-space:nowrap}
     <div class="card"><div class="lbl">Largest Buy</div><div class="val g" id="s-bigbuy">–</div></div>
     <div class="card"><div class="lbl">Largest Sell</div><div class="val r" id="s-bigsell">–</div></div>
   </div>
-  <div class="ticker-bar" id="ticker-bar"></div>
 
+  <!-- portfolio -->
   <section>
-    <h2>📊 90-Day Buy vs Sell — Per Ticker</h2>
-    <div style="margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <label style="font-size:13px;color:var(--muted)">Ticker:</label>
-      <select id="chart-ticker" style="background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 12px;font-size:13px;outline:none"></select>
+    <h2>💼 Portfolio</h2>
+    <div class="portfolio-grid" id="portfolio-grid"></div>
+    <div id="chart-panel">
+      <h3 id="chart-panel-title"></h3>
+      <div id="expanded-chart"></div>
     </div>
-    <div id="ticker-chart" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;min-height:320px"></div>
   </section>
 
+  <!-- top signals -->
   <section>
-    <h2>⭐ Top Signal Alerts</h2>
+    <h2>⭐ Top Signal Alerts <span style="font-size:12px;color:var(--muted);font-weight:400">Portfolio only</span></h2>
     <div class="signal-grid" id="signal-cards"></div>
   </section>
+
+  <!-- cluster & streak -->
   <section>
     <h2>📌 Cluster & Streak Signals</h2>
     <div class="signal-grid" id="cluster-cards"></div>
   </section>
-  <section>
-    <h2>📋 Full Transaction Log</h2>
-    <div class="filters">
-      <input id="f-search" placeholder="🔍 Search insider…" style="width:180px"/>
-      <select id="f-dir">
-        <option value="">All Directions</option>
-        <option value="BUY">Buys only</option>
-        <option value="SELL">Sells only</option>
-      </select>
-      <select id="f-cat">
-        <option value="">All Categories</option>
-        <option value="open_market">Open Market</option>
-        <option value="derivative">Options / Exercises</option>
-        <option value="award">Awards / Grants</option>
-        <option value="tax">Tax Withholding</option>
-        <option value="other">Other</option>
-      </select>
-      <select id="f-days">
-        <option value="30">Last 30 days</option>
-        <option value="60">Last 60 days</option>
-        <option value="90" selected>Last 90 days</option>
-        <option value="9999">All time</option>
-      </select>
-      <button class="btn" onclick="resetFilters()">Reset</button>
-      <span id="count"></span>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr>
-          <th data-col="ticker">Ticker</th>
-          <th data-col="txn_date">Date</th>
-          <th data-col="type">Direction</th>
-          <th data-col="txn_label">Transaction</th>
-          <th data-col="insider">Insider</th>
-          <th data-col="role">Role</th>
-          <th data-col="shares" class="num">Shares</th>
-          <th data-col="price" class="num">Price</th>
-          <th data-col="total_value" class="num">Total Value</th>
-          <th data-col="_sigScore">Signal</th>
-        </tr></thead>
-        <tbody id="tbody"></tbody>
-      </table>
-      <div id="empty">No trades match the current filters.</div>
-    </div>
-  </section>
 </main>
+
 <script>
 const PORTFOLIO=["PLTR","NVDA","AAPL","MSFT","META","AMZN","GOOG","AVGO","NOW","UNH","V","MA","MELI","PANW","FTNT","MNST","LLY","AXON","MPWR","APH"];
-let ALL=[],sortCol="txn_date",sortDir=-1,activeTicker=null;
+let ALL=[], expandedTicker=null, chartInstance=null;
 
+// ── formatters ────────────────────────────────────────────────────────────────
 const money=v=>{if(!v)return"–";const n=Number(v);if(n>=1e9)return"$"+(n/1e9).toFixed(1)+"B";if(n>=1e6)return"$"+(n/1e6).toFixed(1)+"M";if(n>=1e3)return"$"+(n/1e3).toFixed(0)+"K";return"$"+n.toFixed(0)};
-const moneyFull=v=>v?"$"+Number(v).toLocaleString(undefined,{maximumFractionDigits:0}):"–";
 const fmtNum=v=>v?Number(v).toLocaleString(undefined,{maximumFractionDigits:0}):"–";
 const fmtPx=v=>v?"$"+Number(v).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):"–";
 const fmtDate=s=>{if(!s)return"–";const d=new Date(s+"T12:00:00Z");return d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"2-digit"})};
 
+// ── signal engine ─────────────────────────────────────────────────────────────
 function scoreSignal(t){
   const cat=t.txn_category||"",type=t.type||"",val=t.total_value||0;
   const role=(t.role||"").toLowerCase();
   const isExec=/\b(ceo|cfo|coo|cto|cso|cmo|cpo|president|chairman|founder|director)\b/.test(role);
-  if(cat==="tax")return{score:0,label:"NEUTRAL",cls:"sN"};
-  if(cat==="award")return{score:0.5,label:"NEUTRAL",cls:"sN"};
+  if(cat==="tax")  return{score:0,  label:"NEUTRAL",         cls:"sN"};
+  if(cat==="award")return{score:0.5,label:"NEUTRAL",         cls:"sN"};
   let s=0;
   if(type==="BUY"&&cat==="open_market"){s=2;if(isExec)s+=1;if(val>=5e5)s+=0.5;if(val>=1e6)s+=0.5;if(val>=5e6)s+=1;if(val>=1e7)s+=1;if(val>=5e7)s+=1;}
   else if(type==="SELL"&&cat==="open_market"){s=-2;if(isExec)s-=0.5;if(val>=1e6)s-=0.5;if(val>=5e6)s-=0.5;if(val>=1e7)s-=0.5;const after=parseFloat(t.shares_after)||0;if(t.shares_after==="0"||after===0)s-=1.5;}
   else if(cat==="derivative"){s=type==="BUY"?0.5:-0.5;}
-  if(s>=5)return{score:s,label:"STRONGLY BULLISH",cls:"sB2"};
-  if(s>=3)return{score:s,label:"BULLISH",cls:"sB1"};
-  if(s>=1)return{score:s,label:"MILDLY BULLISH",cls:"sB0"};
-  if(s>-1)return{score:s,label:"NEUTRAL",cls:"sN"};
-  if(s>=-2.5)return{score:s,label:"MILDLY BEARISH",cls:"sBr0"};
-  if(s>=-4)return{score:s,label:"BEARISH",cls:"sBr1"};
+  if(s>=5) return{score:s,label:"STRONGLY BULLISH",cls:"sB2"};
+  if(s>=3) return{score:s,label:"BULLISH",          cls:"sB1"};
+  if(s>=1) return{score:s,label:"MILDLY BULLISH",   cls:"sB0"};
+  if(s>-1) return{score:s,label:"NEUTRAL",          cls:"sN"};
+  if(s>=-2.5)return{score:s,label:"MILDLY BEARISH", cls:"sBr0"};
+  if(s>=-4)  return{score:s,label:"BEARISH",        cls:"sBr1"};
   return{score:s,label:"STRONGLY BEARISH",cls:"sBr2"};
 }
 
+// ── cluster + streak ──────────────────────────────────────────────────────────
 function buildClusters(trades){
   const map={};
   trades.forEach(t=>{const k=t.ticker+"_"+t.txn_date;if(!map[k])map[k]={trades:[],insiders:new Set()};map[k].trades.push(t);map[k].insiders.add(t.insider);});
   trades.forEach(t=>{const g=map[t.ticker+"_"+t.txn_date];if(g.insiders.size>=2){t._cluster=true;t._clusterCount=g.insiders.size;t._clusterTotalVal=g.trades.reduce((a,x)=>a+(x.total_value||0),0);t._clusterDir=g.trades.filter(x=>x.type==="SELL").length>g.trades.filter(x=>x.type==="BUY").length?"SELL":"BUY";}});
 }
-
 function buildStreaks(trades){
   const map={};
   trades.forEach(t=>{const k=t.insider+"||"+t.ticker;if(!map[k])map[k]=[];map[k].push(t.txn_date);});
@@ -207,196 +161,187 @@ function buildStreaks(trades){
   trades.forEach(t=>{t._streak=streak(map[t.insider+"||"+t.ticker]||[]);});
 }
 
+// ── commentary ────────────────────────────────────────────────────────────────
 function commentary(t,sig){
-  const v=t.total_value||0,vm=money(v),role=t.role||"Insider",tk=t.ticker;
-  const after=parseFloat(t.shares_after)||0;
-  if(t._cluster&&t._clusterCount>=2){const dir=t._clusterDir==="BUY"?"buying":"selling";return t._clusterDir==="BUY"?"<strong>CLUSTER BUY.</strong> "+t._clusterCount+" insiders "+dir+" "+tk+" the same day — collective conviction signal worth monitoring.":"<strong>BEARISH CLUSTER.</strong> "+t._clusterCount+" insiders "+dir+" "+tk+" on the same day (combined ~"+money(t._clusterTotalVal)+"). Coordinated C-suite selling is a significant red flag.";}
-  if(t.type==="SELL"&&(t.shares_after==="0"||after===0))return"<strong>BEARISH.</strong> "+role+" sold all remaining shares ("+vm+"), leaving zero holdings post-transaction. Full liquidation signals the insider sees limited near-term upside.";
+  const v=t.total_value||0,vm=money(v),role=t.role||"Insider",tk=t.ticker,after=parseFloat(t.shares_after)||0;
+  if(t._cluster&&t._clusterCount>=2){const dir=t._clusterDir==="BUY"?"buying":"selling";return t._clusterDir==="BUY"?"<strong>CLUSTER BUY.</strong> "+t._clusterCount+" insiders "+dir+" "+tk+" the same day — collective conviction signal.":"<strong>BEARISH CLUSTER.</strong> "+t._clusterCount+" insiders "+dir+" "+tk+" (combined ~"+money(t._clusterTotalVal)+"). Coordinated C-suite selling is a significant red flag.";}
+  if(t.type==="SELL"&&(t.shares_after==="0"||after===0))return"<strong>BEARISH.</strong> "+role+" sold ALL remaining shares ("+vm+"), leaving zero holdings. Full liquidation signals limited near-term conviction.";
   if(t._streak>=3&&t.type==="BUY")return"<strong>STRONGLY BULLISH.</strong> "+role+" purchased "+tk+" across "+t._streak+" consecutive days — persistent accumulation signals high conviction.";
-  if(t._streak>=3&&t.type==="SELL")return"<strong>BEARISH PATTERN.</strong> "+role+" sold "+tk+" across "+t._streak+" consecutive days — methodical exit signals deliberate de-risking.";
-  if(t.type==="BUY"&&t.txn_category==="open_market"){if(v>=5e7)return"<strong>STRONGLY BULLISH.</strong> A "+vm+" open-market purchase by a "+role+" is one of the largest conviction signals possible.";if(v>=1e7)return"<strong>STRONGLY BULLISH.</strong> A "+vm+" open-market buy by a "+role+" represents a significant personal capital commitment.";if(v>=1e6)return"<strong>BULLISH.</strong> "+role+" made a "+vm+" open-market purchase — a direct commitment signaling confidence in the current valuation.";if(v>=1e5)return"<strong>MILDLY BULLISH.</strong> "+role+" bought "+vm+" in the open market. A positive signal, though modest in size.";return"<strong>NEUTRAL.</strong> Small open-market buy by "+role+". Insufficient size to draw strong conclusions.";}
-  if(t.type==="SELL"&&t.txn_category==="open_market"){if(v>=1e7)return"<strong>BEARISH.</strong> "+role+" sold "+vm+" in open-market transactions. Large-scale selling warrants monitoring.";if(v>=1e6)return"<strong>MILDLY BEARISH.</strong> "+vm+" open-market sale by "+role+". Notable size worth watching for follow-up.";return"<strong>NEUTRAL.</strong> Modest open-market sale by "+role+" ("+vm+"). Likely routine portfolio management.";}
+  if(t._streak>=3&&t.type==="SELL")return"<strong>BEARISH PATTERN.</strong> "+role+" sold "+tk+" across "+t._streak+" consecutive days — methodical exit.";
+  if(t.type==="BUY"&&t.txn_category==="open_market"){if(v>=5e7)return"<strong>STRONGLY BULLISH.</strong> A "+vm+" open-market purchase is one of the largest conviction signals possible.";if(v>=1e7)return"<strong>STRONGLY BULLISH.</strong> A "+vm+" open-market buy by a "+role+" is a significant personal capital commitment.";if(v>=1e6)return"<strong>BULLISH.</strong> "+role+" made a "+vm+" open-market purchase — signals confidence in current valuation.";if(v>=1e5)return"<strong>MILDLY BULLISH.</strong> "+role+" bought "+vm+" in the open market.";return"<strong>NEUTRAL.</strong> Small open-market buy by "+role+".";}
+  if(t.type==="SELL"&&t.txn_category==="open_market"){if(v>=1e7)return"<strong>BEARISH.</strong> "+role+" sold "+vm+" — large-scale open-market selling warrants monitoring.";if(v>=1e6)return"<strong>MILDLY BEARISH.</strong> "+vm+" open-market sale by "+role+". Notable size worth watching.";return"<strong>NEUTRAL.</strong> Modest open-market sale by "+role+" ("+vm+").";}
   if(t.txn_category==="derivative")return"<strong>NEUTRAL.</strong> "+role+" exercised derivative securities worth "+vm+". Typically part of a planned compensation program.";
-  return role+" transaction of "+vm+". Monitor for follow-up.";
+  return role+" transaction of "+vm+".";
 }
 
+// ── mini SVG chart (per tile) ─────────────────────────────────────────────────
+function miniSVG(byDate){
+  const dates=Object.keys(byDate).sort().slice(-60);
+  if(!dates.length) return null;
+  const maxVal=Math.max(...dates.map(d=>Math.max(byDate[d].buy,byDate[d].sell)),1);
+  const W=300,H=60,mid=H/2,barW=Math.max(2,Math.floor((W-dates.length)/dates.length));
+  let bars="";
+  dates.forEach((d,i)=>{
+    const x=i*(barW+1);
+    const bh=Math.max(1,(byDate[d].buy/maxVal)*mid);
+    const sh=Math.max(1,(byDate[d].sell/maxVal)*mid);
+    if(byDate[d].buy>0)  bars+=`<rect x="${x}" y="${mid-bh}" width="${barW}" height="${bh}" fill="#22c55e" opacity="0.85"/>`;
+    if(byDate[d].sell>0) bars+=`<rect x="${x}" y="${mid}" width="${barW}" height="${sh}" fill="#ef4444" opacity="0.85"/>`;
+  });
+  return`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" width="100%" height="60"><line x1="0" y1="${mid}" x2="${W}" y2="${mid}" stroke="#252a3a" stroke-width="1"/>${bars}</svg>`;
+}
+
+// ── portfolio tiles ───────────────────────────────────────────────────────────
+function buildPortfolioGrid(){
+  const grid=document.getElementById("portfolio-grid");
+  const cutoff=new Date();cutoff.setDate(cutoff.getDate()-90);
+  const cutStr=cutoff.toISOString().slice(0,10);
+
+  // pre-compute per-ticker
+  const tkData={};
+  PORTFOLIO.forEach(tk=>{
+    const trades=ALL.filter(t=>t.ticker===tk);
+    const recent=trades.filter(t=>t.txn_date>=cutStr);
+    const byDate={};
+    recent.forEach(t=>{
+      if(!byDate[t.txn_date])byDate[t.txn_date]={buy:0,sell:0};
+      if(t.type==="BUY")  byDate[t.txn_date].buy +=(t.total_value||0);
+      if(t.type==="SELL") byDate[t.txn_date].sell+=(t.total_value||0);
+    });
+    const buyTotal =recent.filter(t=>t.type==="BUY") .reduce((s,t)=>s+(t.total_value||0),0);
+    const sellTotal=recent.filter(t=>t.type==="SELL").reduce((s,t)=>s+(t.total_value||0),0);
+    const company  =trades.length ? (trades[0].company||tk) : tk;
+    // aggregate signal: pick dominant open-market trade by value
+    const omTrades=recent.filter(t=>t.txn_category==="open_market");
+    const topTrade=omTrades.sort((a,b)=>(b.total_value||0)-(a.total_value||0))[0];
+    const sig=topTrade ? scoreSignal(topTrade) : {label:"—",cls:"sN"};
+    tkData[tk]={byDate,buyTotal,sellTotal,company,sig,count:recent.length};
+  });
+
+  grid.innerHTML=PORTFOLIO.map(tk=>{
+    const d=tkData[tk];
+    const svg=miniSVG(d.byDate);
+    const chartHtml=svg
+      ? `<div class="ptile-chart">${svg}</div>`
+      : `<div class="ptile-chart"><div class="no-activity">No activity (90d)</div></div>`;
+    return`<div class="ptile" id="ptile-${tk}" onclick="toggleExpand('${tk}')">
+      <div class="ptile-head">
+        <div class="ptile-ticker">${tk}</div>
+        <span class="sig-badge ${d.sig.cls}" style="font-size:9px">${d.sig.label}</span>
+      </div>
+      <div class="ptile-company">${d.company}</div>
+      <div class="ptile-stats">
+        <span class="buy">↑ ${money(d.buyTotal)}</span>
+        <span class="sell">↓ ${money(d.sellTotal)}</span>
+        <span class="trades">${d.count} trades</span>
+      </div>
+      ${chartHtml}
+    </div>`;
+  }).join("");
+}
+
+// ── expanded chart (click tile) ───────────────────────────────────────────────
+function toggleExpand(ticker){
+  const panel=document.getElementById("chart-panel");
+  if(expandedTicker===ticker){
+    // collapse
+    expandedTicker=null;panel.style.display="none";
+    document.querySelectorAll(".ptile").forEach(p=>p.classList.remove("active"));
+    if(chartInstance){try{chartInstance.destroy();}catch(e){}chartInstance=null;}
+    return;
+  }
+  expandedTicker=ticker;
+  document.querySelectorAll(".ptile").forEach(p=>p.classList.remove("active"));
+  document.getElementById("ptile-"+ticker).classList.add("active");
+
+  const cutoff=new Date();cutoff.setDate(cutoff.getDate()-90);
+  const cutStr=cutoff.toISOString().slice(0,10);
+  const byDate={};
+  ALL.filter(t=>t.ticker===ticker&&t.txn_date>=cutStr).forEach(t=>{
+    if(!byDate[t.txn_date])byDate[t.txn_date]={buy:0,sell:0};
+    if(t.type==="BUY")  byDate[t.txn_date].buy +=(t.total_value||0);
+    if(t.type==="SELL") byDate[t.txn_date].sell+=(t.total_value||0);
+  });
+  const dates=Object.keys(byDate).sort();
+  const buyVals =dates.map(d=> Math.round(byDate[d].buy /1000));
+  const sellVals=dates.map(d=>-Math.round(byDate[d].sell/1000));
+
+  document.getElementById("chart-panel-title").textContent=ticker+" — Insider Buy vs Sell (90 days)";
+  panel.style.display="block";
+  panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+
+  const el=document.getElementById("expanded-chart");
+  el.innerHTML="";
+  if(chartInstance){try{chartInstance.destroy();}catch(e){}chartInstance=null;}
+
+  if(!dates.length){el.innerHTML="<p style='color:var(--muted);padding:30px;text-align:center'>No activity in the last 90 days.</p>";return;}
+
+  chartInstance=new ApexCharts(el,{
+    series:[{name:"Buy ($K)",data:buyVals},{name:"Sell ($K)",data:sellVals}],
+    chart:{type:"bar",stacked:true,height:280,background:"transparent",toolbar:{show:false},animations:{enabled:false}},
+    colors:["#22c55e","#ef4444"],
+    plotOptions:{bar:{columnWidth:"70%",borderRadius:2}},
+    dataLabels:{enabled:false},
+    xaxis:{categories:dates,labels:{style:{colors:"#6b7280",fontSize:"11px"},rotate:-45,hideOverlappingLabels:true},axisBorder:{color:"#252a3a"},axisTicks:{color:"#252a3a"}},
+    yaxis:{labels:{style:{colors:"#6b7280",fontSize:"11px"},formatter:v=>(v>=0?"+$":"-$")+Math.abs(v)+"K"}},
+    grid:{borderColor:"#1e2130",strokeDashArray:3},
+    legend:{labels:{colors:"#9ca3af"},position:"top"},
+    tooltip:{theme:"dark",y:{formatter:v=>"$"+Math.abs(v).toLocaleString()+"K"}}
+  });
+  chartInstance.render();
+}
+
+// ── signal cards ──────────────────────────────────────────────────────────────
 function renderSignalCards(trades,containerId,filterFn){
   const el=document.getElementById(containerId);if(!el)return;
-  const scored=trades.map(t=>({t,sig:scoreSignal(t)})).filter(filterFn).sort((a,b)=>Math.abs(b.sig.score)-Math.abs(a.sig.score));
+  const portfolioSet=new Set(PORTFOLIO);
+  const scored=trades
+    .filter(t=>portfolioSet.has(t.ticker))
+    .map(t=>({t,sig:scoreSignal(t)}))
+    .filter(filterFn)
+    .sort((a,b)=>Math.abs(b.sig.score)-Math.abs(a.sig.score));
   const seen=new Set(),top=[];
-  for(const{t,sig}of scored){const k=t._cluster?t.ticker+"_"+t.txn_date+t._clusterDir:t.insider+"||"+t.ticker+"_"+t.txn_date;if(!seen.has(k)){seen.add(k);top.push({t,sig});}if(top.length>=8)break;}
+  for(const{t,sig}of scored){
+    const k=t._cluster?t.ticker+"_"+t.txn_date+t._clusterDir:t.insider+"||"+t.ticker+"_"+t.txn_date;
+    if(!seen.has(k)){seen.add(k);top.push({t,sig});}
+    if(top.length>=8)break;
+  }
   if(!top.length){el.innerHTML="<p class='no-sig'>No signals in the current window.</p>";return;}
   el.innerHTML=top.map(({t,sig})=>{
     const flags=[];
     if(t._cluster&&t._clusterCount>=2)flags.push(`<span class="flag w">⚠ ${t._clusterCount} insiders same day</span>`);
     if(t.type==="SELL"&&(t.shares_after==="0"||parseFloat(t.shares_after)===0))flags.push(`<span class="flag d">🚨 Zero shares after</span>`);
     if(t._streak>=3)flags.push(`<span class="flag g">📈 ${t._streak}-day streak</span>`);
-    else if(t._streak===2)flags.push(`<span class="flag g">📈 2-day accumulation</span>`);
-    return`<div class="sc"><div class="sc-head"><div><div class="sc-ticker">${t.ticker}</div><div class="sc-company">${t.company||""}</div></div><span class="sig-badge ${sig.cls}">${sig.label}</span></div><div><div class="sc-insider">${t.insider||"–"}</div><div class="sc-role">${t.role||"–"}</div></div><div class="sc-metrics"><div class="sc-metric"><div class="mk">Shares</div><div class="mv">${fmtNum(t.shares)}</div></div><div class="sc-metric"><div class="mk">Price</div><div class="mv">${fmtPx(t.price)}</div></div><div class="sc-metric"><div class="mk">Total Value</div><div class="mv" style="color:${t.type==="BUY"?"var(--green)":"var(--red)"}">${money(t.total_value)}</div></div><div class="sc-metric"><div class="mk">Date</div><div class="mv">${fmtDate(t.txn_date)}</div></div></div>${flags.length?`<div class="sc-flags">${flags.join("")}</div>`:""}<div class="sc-commentary">${commentary(t,sig)}</div></div>`;
+    else if(t._streak===2)flags.push(`<span class="flag g">📈 2-day</span>`);
+    return`<div class="sc"><div class="sc-head"><div><div class="sc-ticker">${t.ticker}</div><div class="sc-company">${t.company||""}</div></div><span class="sig-badge ${sig.cls}">${sig.label}</span></div><div><div class="sc-insider">${t.insider||"–"}</div><div class="sc-role">${t.role||"–"}</div></div><div class="sc-metrics"><div class="sc-metric"><div class="mk">Shares</div><div class="mv">${fmtNum(t.shares)}</div></div><div class="sc-metric"><div class="mk">Price</div><div class="mv">${fmtPx(t.price)}</div></div><div class="sc-metric"><div class="mk">Total</div><div class="mv" style="color:${t.type==="BUY"?"var(--green)":"var(--red)"}">${money(t.total_value)}</div></div><div class="sc-metric"><div class="mk">Date</div><div class="mv">${fmtDate(t.txn_date)}</div></div></div>${flags.length?`<div class="sc-flags">${flags.join("")}</div>`:""}<div class="sc-commentary">${commentary(t,sig)}</div></div>`;
   }).join("");
 }
 
-function filtered(){
-  const search=document.getElementById("f-search").value.toLowerCase();
-  const dir=document.getElementById("f-dir").value;
-  const cat=document.getElementById("f-cat").value;
-  const days=parseInt(document.getElementById("f-days").value);
-  const cutoff=new Date();cutoff.setDate(cutoff.getDate()-days);
-  const cutStr=cutoff.toISOString().slice(0,10);
-  return ALL.filter(t=>{
-    if(activeTicker&&t.ticker!==activeTicker)return false;
-    if(dir&&t.type!==dir)return false;
-    if(cat&&t.txn_category!==cat)return false;
-    if(t.txn_date<cutStr)return false;
-    if(search&&!(t.insider||"").toLowerCase().includes(search))return false;
-    return true;
-  });
-}
-
-function render(){
-  let rows=filtered();
-  rows.sort((a,b)=>{let av=a[sortCol]??"",bv=b[sortCol]??"";if(av!==""&&bv!==""&&!isNaN(av)&&!isNaN(bv)){av=+av;bv=+bv;}return av<bv?-sortDir:av>bv?sortDir:0;});
-  const buys=ALL.filter(t=>t.type==="BUY"),sells=ALL.filter(t=>t.type==="SELL");
-  document.getElementById("s-total").textContent=ALL.length;
-  document.getElementById("s-buys").textContent=buys.length;
-  document.getElementById("s-sells").textContent=sells.length;
-  document.getElementById("s-tickers").textContent=new Set(ALL.map(t=>t.ticker)).size;
-  document.getElementById("s-bigbuy").textContent=money(buys.reduce((m,t)=>Math.max(m,t.total_value||0),0));
-  document.getElementById("s-bigsell").textContent=money(sells.reduce((m,t)=>Math.max(m,t.total_value||0),0));
-  document.getElementById("count").textContent=rows.length+" trades shown";
-  const tbody=document.getElementById("tbody"),empty=document.getElementById("empty");
-  if(!rows.length){tbody.innerHTML="";empty.style.display="block";return;}
-  empty.style.display="none";
-  tbody.innerHTML=rows.map(t=>{const sig=scoreSignal(t);return`<tr><td><span class="tbadge">${t.ticker}</span></td><td>${fmtDate(t.txn_date)}</td><td><span class="tag ${t.type}">${t.type}</span></td><td>${t.txn_label||t.txn_code||"–"}<span class="cat ${t.txn_category||""}">${t.txn_category||""}</span></td><td>${t.insider||"–"}${t._cluster?` <span class="flag w" style="font-size:10px">⚠${t._clusterCount}</span>`:""}</td><td class="dim">${t.role||"–"}</td><td class="num">${fmtNum(t.shares)}</td><td class="num">${fmtPx(t.price)}</td><td class="num" style="font-weight:600;color:${t.type==="BUY"?"var(--green)":"var(--red)"}">${moneyFull(t.total_value)}</td><td><span class="sigtag ${sig.cls}">${sig.label}</span></td></tr>`;}).join("");
-  document.querySelectorAll("th[data-col]").forEach(th=>{th.classList.remove("asc","desc");if(th.dataset.col===sortCol)th.classList.add(sortDir===1?"asc":"desc");});
-}
-
-function buildPills(){
-  const bar=document.getElementById("ticker-bar");bar.innerHTML="";
-  const bs=new Set(ALL.filter(t=>t.type==="BUY").map(t=>t.ticker));
-  const ss=new Set(ALL.filter(t=>t.type==="SELL").map(t=>t.ticker));
-  PORTFOLIO.forEach(tk=>{const p=document.createElement("span");p.className="pill";const hb=bs.has(tk),hs=ss.has(tk);if(hb&&hs)p.classList.add("hbs");else if(hb)p.classList.add("hb");else if(hs)p.classList.add("hs");p.textContent=tk;p.onclick=()=>{activeTicker=activeTicker===tk?null:tk;buildPills();render();};if(activeTicker===tk)p.classList.add("active");bar.appendChild(p);});
-}
-
-function resetFilters(){
-  ["f-search","f-dir","f-cat"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("f-days").value="90";
-  activeTicker=null;buildPills();render();
-}
-
-document.querySelectorAll("th[data-col]").forEach(th=>{th.addEventListener("click",()=>{if(sortCol===th.dataset.col)sortDir*=-1;else{sortCol=th.dataset.col;sortDir=-1;}render();});});
-["f-search","f-dir","f-cat","f-days"].forEach(id=>{const el=document.getElementById(id);el.addEventListener("input",render);el.addEventListener("change",render);});
-
-
-// ── per-ticker stacked buy/sell chart ────────────────────────────────────────
-let chartInstance = null;
-
-function buildChartTicker(trades) {
-  const sel = document.getElementById("chart-ticker");
-  if (!sel) return;
-  const tks = PORTFOLIO.filter(tk => trades.some(t => t.ticker === tk));
-  sel.innerHTML = tks.map(tk => `<option value="${tk}">${tk}</option>`).join("");
-  sel.addEventListener("change", () => renderTickerChart(trades, sel.value));
-  if (tks.length) renderTickerChart(trades, tks[0]);
-}
-
-function renderTickerChart(trades, ticker) {
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - 90);
-  const cutStr = cutoff.toISOString().slice(0, 10);
-
-  // Build daily buy/sell map
-  const byDate = {};
-  trades.filter(t => t.ticker === ticker && t.txn_date >= cutStr).forEach(t => {
-    if (!byDate[t.txn_date]) byDate[t.txn_date] = { buy: 0, sell: 0 };
-    const v = t.total_value || 0;
-    if (t.type === "BUY")  byDate[t.txn_date].buy  += v;
-    if (t.type === "SELL") byDate[t.txn_date].sell += v;
-  });
-
-  const dates = Object.keys(byDate).sort();
-  if (!dates.length) {
-    document.getElementById("ticker-chart").innerHTML =
-      "<p style='color:var(--muted);padding:40px;text-align:center'>No open-market activity in the last 90 days for " + ticker + "</p>";
-    return;
-  }
-
-  const buyVals  = dates.map(d =>  Math.round(byDate[d].buy  / 1000));
-  const sellVals = dates.map(d => -Math.round(byDate[d].sell / 1000));
-
-  const options = {
-    series: [
-      { name: "Buy Value ($K)",  data: buyVals  },
-      { name: "Sell Value ($K)", data: sellVals }
-    ],
-    chart: {
-      type: "bar",
-      stacked: true,
-      height: 300,
-      background: "transparent",
-      toolbar: { show: false },
-      animations: { enabled: false }
-    },
-    colors: ["#22c55e", "#ef4444"],
-    plotOptions: {
-      bar: { columnWidth: "70%", borderRadius: 2 }
-    },
-    dataLabels: { enabled: false },
-    xaxis: {
-      categories: dates,
-      labels: {
-        style: { colors: "#6b7280", fontSize: "11px" },
-        rotate: -45,
-        hideOverlappingLabels: true
-      },
-      axisBorder: { color: "#252a3a" },
-      axisTicks: { color: "#252a3a" }
-    },
-    yaxis: {
-      labels: {
-        style: { colors: "#6b7280", fontSize: "11px" },
-        formatter: v => (v >= 0 ? "+$" : "-$") + Math.abs(v) + "K"
-      }
-    },
-    grid: { borderColor: "#1e2130", strokeDashArray: 3 },
-    legend: {
-      labels: { colors: "#9ca3af" },
-      position: "top"
-    },
-    tooltip: {
-      theme: "dark",
-      y: { formatter: v => "$" + Math.abs(v).toLocaleString() + "K" }
-    },
-    title: {
-      text: ticker + " — Insider Buy vs Sell (90 days)",
-      style: { color: "#e2e8f0", fontSize: "14px", fontWeight: "600" }
-    }
-  };
-
-  const el = document.getElementById("ticker-chart");
-  el.innerHTML = "";
-  if (chartInstance) { try { chartInstance.destroy(); } catch(e){} }
-  chartInstance = new ApexCharts(el, options);
-  chartInstance.render();
-}
-
+// ── load ──────────────────────────────────────────────────────────────────────
 async function load(){
   try{
     const r=await fetch("trades.json?_="+Date.now());
     const data=await r.json();
     ALL=data.trades||[];
     document.getElementById("updated").textContent="Last updated: "+(data.updated_at||"unknown");
-    buildClusters(ALL);
-    buildStreaks(ALL);
+    buildClusters(ALL);buildStreaks(ALL);
     ALL.forEach(t=>{t._sigScore=scoreSignal(t).score;});
-    buildPills();
-    buildChartTicker(ALL);
+
+    // stat cards
+    const buys=ALL.filter(t=>t.type==="BUY"),sells=ALL.filter(t=>t.type==="SELL");
+    document.getElementById("s-total").textContent=ALL.length;
+    document.getElementById("s-buys").textContent=buys.length;
+    document.getElementById("s-sells").textContent=sells.length;
+    document.getElementById("s-tickers").textContent=new Set(ALL.map(t=>t.ticker)).size;
+    document.getElementById("s-bigbuy").textContent=money(buys.reduce((m,t)=>Math.max(m,t.total_value||0),0));
+    document.getElementById("s-bigsell").textContent=money(sells.reduce((m,t)=>Math.max(m,t.total_value||0),0));
+
+    buildPortfolioGrid();
     renderSignalCards(ALL,"signal-cards",({t,sig})=>Math.abs(sig.score)>=1.5||(t._cluster&&t._clusterCount>=2));
     renderSignalCards(ALL,"cluster-cards",({t})=>(t._cluster&&t._clusterCount>=2)||(t._streak&&t._streak>=2));
-    render();
   }catch(e){
     document.getElementById("updated").textContent="⚠ Could not load trades.json — run fetch_trades.py first";
-    ["signal-cards","cluster-cards"].forEach(id=>document.getElementById(id).innerHTML="<p class='no-sig'>No data yet.</p>");
+    ["signal-cards","cluster-cards"].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML="<p class='no-sig'>No data yet.</p>";});
   }
 }
 
