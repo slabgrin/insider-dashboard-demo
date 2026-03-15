@@ -7,31 +7,16 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzBkMTExNyIvPgogIDxyZWN0IHg9IjMiIHk9IjE3IiB3aWR0aD0iNSIgaGVpZ2h0PSIxMCIgcng9IjEiIGZpbGw9IiMzZmI5NTAiLz4KICA8cmVjdCB4PSIxMCIgeT0iMTEiIHdpZHRoPSI1IiBoZWlnaHQ9IjE2IiByeD0iMSIgZmlsbD0iIzNmYjk1MCIvPgogIDxyZWN0IHg9IjE3IiB5PSI2IiB3aWR0aD0iNSIgaGVpZ2h0PSIyMCIgcng9IjEiIGZpbGw9IiNmODUxNDkiLz4KICA8cmVjdCB4PSIyNCIgeT0iMTQiIHdpZHRoPSI1IiBoZWlnaHQ9IjEyIiByeD0iMSIgZmlsbD0iI2Y4NTE0OSIvPgogIDxsaW5lIHgxPSIxIiB5MT0iMjgiIHgyPSIzMSIgeTI9IjI4IiBzdHJva2U9IiMzMDM2M2QiIHN0cm9rZS13aWR0aD0iMS41Ii8+Cjwvc3ZnPg=="/>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.1/dist/apexcharts.min.js"></script>
 <style>
-/* ── Exact variables + base from macro dashboard ── */
 :root{
   --bg:#0d1117;--surface:#161b22;--card:#1c2333;--border:#30363d;
   --accent-blue:#58a6ff;--accent-green:#3fb950;--accent-red:#f85149;
   --accent-yellow:#e3b341;--accent-purple:#bc8cff;--accent-orange:#ffa657;
   --accent-cyan:#79c0ff;
   --text-primary:#e6edf3;--text-secondary:#8b949e;--text-muted:#6e7681;
-  --tag-hold:#1f4068;--tag-cut:#1a3a2a;--tag-hike:#3a1a1a;--tag-watch:#2a2a1a;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{
-  background:var(--bg);color:var(--text-primary);
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  font-size:13px;line-height:1.5;
-}
-
-/* ── Header (exact macro dashboard) ── */
-.header{
-  background:linear-gradient(135deg,#0d1117 0%,#161b22 100%);
-  border-bottom:1px solid var(--border);
-  padding:20px 24px 14px;
-  display:flex;align-items:flex-start;justify-content:space-between;
-  flex-wrap:wrap;gap:16px;
-  position:sticky;top:0;z-index:100;
-}
+body{background:var(--bg);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;line-height:1.5}
+.header{background:linear-gradient(135deg,#0d1117 0%,#161b22 100%);border-bottom:1px solid var(--border);padding:20px 24px 14px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;position:sticky;top:0;z-index:100}
 .header-left h1{font-size:22px;font-weight:700;color:var(--accent-blue);letter-spacing:-0.3px}
 .header-left h1 span{color:var(--text-primary)}
 .header-left .subtitle{font-size:12px;color:var(--text-secondary);margin-top:3px}
@@ -43,19 +28,9 @@ body{
 .badge-blue{background:rgba(88,166,255,.12);color:var(--accent-blue);border:1px solid rgba(88,166,255,.3)}
 .header-timestamp{text-align:right;font-size:11px;color:var(--text-muted);white-space:nowrap;margin-top:4px;font-family:monospace}
 .auto-refresh{color:var(--accent-green);font-size:10px;letter-spacing:.5px}
-
-/* ── Layout ── */
 main{max-width:1400px;margin:0 auto;padding:20px 24px 40px}
-
-/* ── Section title (exact macro dashboard) ── */
-.section-title{
-  font-size:11px;font-weight:700;color:var(--text-secondary);
-  text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;
-  display:flex;align-items:center;gap:8px;
-}
+.section-title{font-size:11px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border)}
-
-/* ── Summary cards (exact macro dashboard) ── */
 .summary-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px}
 .summary-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center}
 .summary-card .val{font-size:28px;font-weight:700;line-height:1}
@@ -63,17 +38,9 @@ main{max-width:1400px;margin:0 auto;padding:20px 24px 40px}
 .val-red{color:var(--accent-red)}.val-yellow{color:var(--accent-yellow)}
 .val-blue{color:var(--accent-blue)}.val-green{color:var(--accent-green)}
 .val-orange{color:var(--accent-orange)}
-
-/* ── Section wrapper (spacing between sections) ── */
 .data-section{margin-bottom:32px}
-
-/* ── Portfolio grid tiles ── */
 .portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
-.ptile{
-  background:var(--card);border:1px solid var(--border);border-radius:10px;
-  padding:14px 16px;cursor:pointer;position:relative;overflow:hidden;
-  transition:border-color .2s,transform .15s;
-}
+.ptile{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;cursor:pointer;position:relative;overflow:hidden;transition:border-color .2s,transform .15s}
 .ptile:hover{transform:translateY(-2px);border-color:#444d56}
 .ptile.active{border-color:var(--accent-blue)}
 .ptile-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
@@ -85,26 +52,11 @@ main{max-width:1400px;margin:0 auto;padding:20px 24px 40px}
 .ptile-stats .sell{color:var(--accent-red);font-weight:600}
 .ptile-stats .trades{color:var(--text-muted)}
 .ptile-chart{width:100%;height:50px}
-.ptile-chart svg{width:100%;height:50px}
 .no-act{font-size:10px;color:var(--text-muted);text-align:center;line-height:50px;font-family:monospace;font-style:italic}
-
-/* ── Expanded chart panel ── */
-#chart-panel{
-  background:var(--card);border:1px solid var(--border);border-radius:10px;
-  padding:20px 24px;display:none;margin-top:10px;
-}
-#chart-panel-title{
-  font-size:11px;font-weight:700;color:var(--text-secondary);
-  text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;font-family:monospace;
-}
-
-/* ── Signal cards ── */
+#chart-panel{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;display:none;margin-top:10px}
+#chart-panel-title{font-size:11px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;font-family:monospace}
 .signal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
-.sc{
-  background:var(--card);border:1px solid var(--border);border-radius:10px;
-  padding:16px;display:flex;flex-direction:column;gap:10px;
-  transition:border-color .2s,transform .15s;
-}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,transform .15s}
 .sc:hover{transform:translateY(-2px);border-color:#444d56}
 .sc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .sc-ticker{font-size:17px;font-weight:700;color:var(--accent-blue);letter-spacing:-.3px}
@@ -129,35 +81,13 @@ main{max-width:1400px;margin:0 auto;padding:20px 24px 40px}
 .sc-commentary{font-size:12px;color:var(--text-secondary);line-height:1.6;border-top:1px solid var(--border);padding-top:10px}
 .sc-commentary strong{color:var(--text-primary)}
 .no-sig{color:var(--text-muted);font-size:12px;padding:10px 0;font-family:monospace;font-style:italic}
-
-/* ── Market flow container ── */
-#market-chart{
-  background:var(--card);border:1px solid var(--border);border-radius:10px;
-  padding:20px;min-height:240px;
-}
-.market-placeholder{
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:8px;height:200px;
-}
+#market-chart{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;min-height:240px}
+.market-placeholder{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;height:200px}
 .market-placeholder p{color:var(--text-muted);font-family:monospace;font-size:12px}
-
-/* ── Footer (exact macro dashboard) ── */
-.footer{
-  text-align:center;padding:14px 24px;font-size:11px;
-  color:var(--text-muted);border-top:1px solid var(--border);
-  margin-top:8px;font-family:monospace;
-}
-
-/* ── Live dot ── */
+.footer{text-align:center;padding:14px 24px;font-size:11px;color:var(--text-muted);border-top:1px solid var(--border);margin-top:8px;font-family:monospace}
 .live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent-green);margin-right:5px;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(63,185,80,.6)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(63,185,80,0)}}
-
-@media(max-width:640px){
-  .header{padding:16px}
-  main{padding:16px 16px 32px}
-  .portfolio-grid{grid-template-columns:repeat(2,1fr)}
-  .signal-grid{grid-template-columns:1fr}
-}
+@media(max-width:640px){.header{padding:16px}main{padding:16px 16px 32px}.portfolio-grid{grid-template-columns:repeat(2,1fr)}.signal-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -166,12 +96,6 @@ main{max-width:1400px;margin:0 auto;padding:20px 24px 40px}
   <div class="header-left">
     <h1>INSIDER <span>INTEL</span></h1>
     <div class="subtitle">Portfolio Insider Trades Tracker — SEC Form 4</div>
-    <div class="header-badges">
-      <span class="badge badge-blue" id="b-total">– trades</span>
-      <span class="badge badge-green" id="b-buys">– buys</span>
-      <span class="badge badge-red" id="b-sells">– sells</span>
-      <span class="badge badge-yellow" id="b-tickers">– tickers</span>
-    </div>
   </div>
   <div class="header-timestamp">
     <div class="auto-refresh"><span class="live-dot"></span>AUTO-REFRESHES DAILY</div>
@@ -181,29 +105,41 @@ main{max-width:1400px;margin:0 auto;padding:20px 24px 40px}
 
 <main>
 
-  <!-- Summary -->
+  <!-- Portfolio Summary -->
   <div class="data-section">
-    <div class="section-title">Summary</div>
+    <div class="section-title">Portfolio Summary</div>
     <div class="summary-row">
-      <div class="summary-card"><div class="val val-blue" id="s-total">–</div><div class="lbl">Total Trades</div></div>
+      <div class="summary-card"><div class="val val-blue"  id="s-total">–</div><div class="lbl">Total Trades</div></div>
       <div class="summary-card"><div class="val val-green" id="s-buys">–</div><div class="lbl">Buys</div></div>
-      <div class="summary-card"><div class="val val-red" id="s-sells">–</div><div class="lbl">Sells</div></div>
+      <div class="summary-card"><div class="val val-red"   id="s-sells">–</div><div class="lbl">Sells</div></div>
       <div class="summary-card"><div class="val val-yellow" id="s-tickers">–</div><div class="lbl">Active Tickers</div></div>
-      <div class="summary-card"><div class="val val-green" id="s-bigbuy" style="font-size:18px;margin-top:4px">–</div><div class="lbl">Largest Buy</div></div>
-      <div class="summary-card"><div class="val val-red" id="s-bigsell" style="font-size:18px;margin-top:4px">–</div><div class="lbl">Largest Sell</div></div>
+      <div class="summary-card"><div class="val val-green" id="s-buytotal" style="font-size:18px;margin-top:4px">–</div><div class="lbl">Total Buy Value</div></div>
+      <div class="summary-card"><div class="val val-red"   id="s-selltotal" style="font-size:18px;margin-top:4px">–</div><div class="lbl">Total Sell Value</div></div>
     </div>
   </div>
 
-  <!-- Portfolio -->
+  <!-- Portfolio 90-day tiles -->
   <div class="data-section">
     <div class="section-title">💼 Portfolio — 90-Day Insider Flow</div>
     <div class="portfolio-grid" id="portfolio-grid"></div>
     <div id="chart-panel"><div id="chart-panel-title"></div><div id="expanded-chart"></div></div>
   </div>
 
-  <!-- US Market Flow -->
+  <!-- US Market Summary -->
   <div class="data-section">
-    <div class="section-title">🌐 US Market Insider Flow — Last 90 Days</div>
+    <div class="section-title" id="market-summary-title">🌐 US Market Summary</div>
+    <div class="summary-row">
+      <div class="summary-card"><div class="val val-blue"  id="m-total">–</div><div class="lbl">Total Trades</div></div>
+      <div class="summary-card"><div class="val val-green" id="m-buys">–</div><div class="lbl">Buys</div></div>
+      <div class="summary-card"><div class="val val-red"   id="m-sells">–</div><div class="lbl">Sells</div></div>
+      <div class="summary-card"><div class="val val-green" id="m-buytotal" style="font-size:18px;margin-top:4px">–</div><div class="lbl">Total Buy Value</div></div>
+      <div class="summary-card"><div class="val val-red"   id="m-selltotal" style="font-size:18px;margin-top:4px">–</div><div class="lbl">Total Sell Value</div></div>
+    </div>
+  </div>
+
+  <!-- US Market Flow chart -->
+  <div class="data-section">
+    <div class="section-title" id="market-flow-title">🌐 US Market Insider Flow — Last 90 Days</div>
     <div id="market-chart">
       <div class="market-placeholder">
         <p>market_flow.json not found</p>
@@ -251,7 +187,7 @@ function scoreSignal(t){
   const cat=t.txn_category||"",type=t.type||"",val=t.total_value||0;
   const role=(t.role||"").toLowerCase();
   const isExec=/\b(ceo|cfo|coo|cto|president|chairman|founder|director)\b/.test(role);
-  if(cat==="tax")  return{score:0,label:"NEUTRAL",cls:"sN"};
+  if(cat==="tax")return{score:0,label:"NEUTRAL",cls:"sN"};
   if(cat==="award")return{score:0.5,label:"NEUTRAL",cls:"sN"};
   let s=0;
   if(type==="BUY"&&cat==="open_market"){s=2;if(isExec)s+=1;if(val>=5e5)s+=.5;if(val>=1e6)s+=.5;if(val>=5e6)s+=1;if(val>=1e7)s+=1;if(val>=5e7)s+=1;}
@@ -262,7 +198,7 @@ function scoreSignal(t){
   if(s>=1) return{score:s,label:"MILDLY BULLISH",cls:"sB0"};
   if(s>-1) return{score:s,label:"NEUTRAL",cls:"sN"};
   if(s>=-2.5)return{score:s,label:"MILDLY BEARISH",cls:"sBr0"};
-  if(s>=-4)  return{score:s,label:"BEARISH",cls:"sBr1"};
+  if(s>=-4) return{score:s,label:"BEARISH",cls:"sBr1"};
   return{score:s,label:"STRONGLY BEARISH",cls:"sBr2"};
 }
 
@@ -278,21 +214,20 @@ function buildStreaks(trades){
   trades.forEach(t=>{t._streak=streak(map[t.insider+"||"+t.ticker]||[]);});
 }
 
-function commentary(t,sig){
+function commentary(t){
   const v=t.total_value||0,vm=money(v),role=t.role||"Insider",tk=t.ticker,a=parseFloat(t.shares_after)||0;
-  if(t._cluster&&t._clusterCount>=2){return t._clusterDir==="BUY"?"<strong>CLUSTER BUY.</strong> "+t._clusterCount+" insiders buying "+tk+" the same day — collective conviction signal.":"<strong>BEARISH CLUSTER.</strong> "+t._clusterCount+" insiders selling "+tk+" (combined ~"+money(t._clusterTotalVal)+"). Coordinated C-suite selling.";}
+  if(t._cluster&&t._clusterCount>=2)return t._clusterDir==="BUY"?"<strong>CLUSTER BUY.</strong> "+t._clusterCount+" insiders buying "+tk+" the same day — collective conviction signal.":"<strong>BEARISH CLUSTER.</strong> "+t._clusterCount+" insiders selling "+tk+" (combined ~"+money(t._clusterTotalVal)+"). Coordinated C-suite selling.";
   if(t.type==="SELL"&&(t.shares_after==="0"||a===0))return"<strong>BEARISH.</strong> "+role+" sold ALL remaining shares ("+vm+"), leaving zero holdings.";
   if(t._streak>=3&&t.type==="BUY")return"<strong>STRONGLY BULLISH.</strong> "+role+" purchased "+tk+" across "+t._streak+" consecutive days — persistent accumulation.";
   if(t._streak>=3&&t.type==="SELL")return"<strong>BEARISH PATTERN.</strong> "+role+" sold "+tk+" across "+t._streak+" consecutive days — methodical exit.";
-  if(t.type==="BUY"&&t.txn_category==="open_market"){if(v>=5e7)return"<strong>STRONGLY BULLISH.</strong> A "+vm+" open-market purchase is one of the largest conviction signals possible.";if(v>=1e7)return"<strong>STRONGLY BULLISH.</strong> A "+vm+" open-market buy by a "+role+" is a significant personal capital commitment.";if(v>=1e6)return"<strong>BULLISH.</strong> "+role+" made a "+vm+" open-market purchase — signals confidence in current valuation.";return"<strong>MILDLY BULLISH.</strong> "+role+" bought "+vm+" in the open market.";}
+  if(t.type==="BUY"&&t.txn_category==="open_market"){if(v>=5e7)return"<strong>STRONGLY BULLISH.</strong> A "+vm+" open-market purchase is one of the largest conviction signals possible.";if(v>=1e7)return"<strong>STRONGLY BULLISH.</strong> "+vm+" open-market buy by "+role+" — significant personal capital commitment.";if(v>=1e6)return"<strong>BULLISH.</strong> "+role+" made a "+vm+" open-market purchase — signals confidence in current valuation.";return"<strong>MILDLY BULLISH.</strong> "+role+" bought "+vm+" in the open market.";}
   if(t.type==="SELL"&&t.txn_category==="open_market"){if(v>=1e7)return"<strong>BEARISH.</strong> "+role+" sold "+vm+" — large-scale open-market selling.";if(v>=1e6)return"<strong>MILDLY BEARISH.</strong> "+vm+" open-market sale by "+role+". Notable size.";return"<strong>NEUTRAL.</strong> Modest open-market sale by "+role+" ("+vm+").";}
   if(t.txn_category==="derivative")return"<strong>NEUTRAL.</strong> "+role+" exercised derivative securities worth "+vm+".";
   return role+" transaction of "+vm+".";
 }
 
 function miniSVG(byDate){
-  const W=280,H=50,mid=H/2;
-  const barW=Math.max(1,Math.floor((W-90)/90));
+  const W=280,H=50,mid=H/2,barW=Math.max(1,Math.floor((W-90)/90));
   const maxVal=Math.max(...DATES_90.map(d=>Math.max((byDate[d]||{buy:0,sell:0}).buy,(byDate[d]||{buy:0,sell:0}).sell)),1);
   let bars="";
   DATES_90.forEach((d,i)=>{
@@ -300,31 +235,27 @@ function miniSVG(byDate){
     if(row.buy>0){const h=Math.max(1.5,(row.buy/maxVal)*(mid-2));bars+=`<rect x="${x}" y="${mid-h}" width="${barW}" height="${h}" fill="#3fb950" opacity="0.85"/>`;}
     if(row.sell>0){const h=Math.max(1.5,(row.sell/maxVal)*(mid-2));bars+=`<rect x="${x}" y="${mid}" width="${barW}" height="${h}" fill="#f85149" opacity="0.85"/>`;}
   });
-  const hasSome=DATES_90.some(d=>byDate[d]);
-  if(!hasSome)return null;
+  if(!DATES_90.some(d=>byDate[d]))return null;
   return`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" width="100%" height="${H}"><line x1="0" y1="${mid}" x2="${W}" y2="${mid}" stroke="#30363d" stroke-width="1"/>${bars}</svg>`;
 }
 
 function buildPortfolioGrid(){
   const cutStr=DATES_90[0];
-  const grid=document.getElementById("portfolio-grid");
-  grid.innerHTML=PORTFOLIO.map(tk=>{
-    const trades=ALL.filter(t=>t.ticker===tk);
-    const recent=trades.filter(t=>t.txn_date>=cutStr);
+  document.getElementById("portfolio-grid").innerHTML=PORTFOLIO.map(tk=>{
+    const trades=ALL.filter(t=>t.ticker===tk),recent=trades.filter(t=>t.txn_date>=cutStr);
     const byDate={};
-    recent.forEach(t=>{if(!byDate[t.txn_date])byDate[t.txn_date]={buy:0,sell:0};if(t.type==="BUY")byDate[t.txn_date].buy+=(t.total_value||0);if(t.type==="SELL")byDate[t.txn_date].sell+=(t.total_value||0);});
+    recent.forEach(t=>{if(!byDate[t.txn_date])byDate[t.txn_date]={buy:0,sell:0};if(t.type==="BUY")byDate[t.txn_date].buy+=(t.total_value||0);else byDate[t.txn_date].sell+=(t.total_value||0);});
     const buyTotal=recent.filter(t=>t.type==="BUY").reduce((s,t)=>s+(t.total_value||0),0);
     const sellTotal=recent.filter(t=>t.type==="SELL").reduce((s,t)=>s+(t.total_value||0),0);
     const company=trades.length?(trades[0].company||tk):tk;
-    const omTrades=recent.filter(t=>t.txn_category==="open_market");
-    const topTrade=omTrades.sort((a,b)=>(b.total_value||0)-(a.total_value||0))[0];
-    const sig=topTrade?scoreSignal(topTrade):{label:"—",cls:"sN"};
+    const top=recent.filter(t=>t.txn_category==="open_market").sort((a,b)=>(b.total_value||0)-(a.total_value||0))[0];
+    const sig=top?scoreSignal(top):{label:"—",cls:"sN"};
     const svg=miniSVG(byDate);
     return`<div class="ptile" id="ptile-${tk}" onclick="toggleExpand('${tk}')">
       <div class="ptile-head"><div class="ptile-ticker">${tk}</div><span class="ptile-sig ${sig.cls}">${sig.label}</span></div>
       <div class="ptile-company">${company}</div>
       <div class="ptile-stats"><span class="buy">↑ ${money(buyTotal)}</span><span class="sell">↓ ${money(sellTotal)}</span><span class="trades">${recent.length} trades</span></div>
-      <div class="ptile-chart">${svg?svg:`<div class="no-act">No activity (90d)</div>`}</div>
+      <div class="ptile-chart">${svg||`<div class="no-act">No activity (90d)</div>`}</div>
     </div>`;
   }).join("");
 }
@@ -336,24 +267,19 @@ function toggleExpand(ticker){
   document.querySelectorAll(".ptile").forEach(p=>p.classList.remove("active"));
   document.getElementById("ptile-"+ticker).classList.add("active");
   const byDate={};
-  ALL.filter(t=>t.ticker===ticker&&t.txn_date>=DATES_90[0]).forEach(t=>{if(!byDate[t.txn_date])byDate[t.txn_date]={buy:0,sell:0};if(t.type==="BUY")byDate[t.txn_date].buy+=(t.total_value||0);if(t.type==="SELL")byDate[t.txn_date].sell+=(t.total_value||0);});
-  const buyVals=DATES_90.map(d=>Math.round((byDate[d]||{buy:0}).buy/1000));
-  const sellVals=DATES_90.map(d=>-Math.round((byDate[d]||{sell:0}).sell/1000));
+  ALL.filter(t=>t.ticker===ticker&&t.txn_date>=DATES_90[0]).forEach(t=>{if(!byDate[t.txn_date])byDate[t.txn_date]={buy:0,sell:0};if(t.type==="BUY")byDate[t.txn_date].buy+=(t.total_value||0);else byDate[t.txn_date].sell+=(t.total_value||0);});
   document.getElementById("chart-panel-title").textContent=ticker+" — Insider Buy vs Sell (90 Days)";
   panel.style.display="block";panel.scrollIntoView({behavior:"smooth",block:"nearest"});
   const el=document.getElementById("expanded-chart");el.innerHTML="";
   if(chartInstance){try{chartInstance.destroy();}catch(e){}chartInstance=null;}
   chartInstance=new ApexCharts(el,{
-    series:[{name:"Buy ($K)",data:buyVals},{name:"Sell ($K)",data:sellVals}],
+    series:[{name:"Buy ($K)",data:DATES_90.map(d=>Math.round((byDate[d]||{buy:0}).buy/1000))},{name:"Sell ($K)",data:DATES_90.map(d=>-Math.round((byDate[d]||{sell:0}).sell/1000))}],
     chart:{type:"bar",stacked:true,height:240,background:"transparent",toolbar:{show:false},animations:{enabled:false}},
-    colors:["#3fb950","#f85149"],
-    plotOptions:{bar:{columnWidth:"80%",borderRadius:1}},
-    dataLabels:{enabled:false},
+    colors:["#3fb950","#f85149"],plotOptions:{bar:{columnWidth:"80%",borderRadius:1}},dataLabels:{enabled:false},
     xaxis:{categories:DATES_90,labels:{show:false},axisBorder:{color:"#30363d"},axisTicks:{color:"#30363d"}},
     yaxis:{labels:{style:{colors:"#8b949e",fontSize:"11px",fontFamily:"monospace"},formatter:v=>(v>=0?"+$":"-$")+Math.abs(v)+"K"}},
-    grid:{borderColor:"#30363d",strokeDashArray:3},
-    legend:{labels:{colors:"#8b949e",fontFamily:"monospace"},position:"top"},
-    tooltip:{theme:"dark",x:{formatter:(_,opts)=>DATES_90[opts.dataPointIndex]},y:{formatter:v=>"$"+Math.abs(v).toLocaleString()+"K"}}
+    grid:{borderColor:"#30363d",strokeDashArray:3},legend:{labels:{colors:"#8b949e",fontFamily:"monospace"},position:"top"},
+    tooltip:{theme:"dark",x:{formatter:(_,o)=>DATES_90[o.dataPointIndex]},y:{formatter:v=>"$"+Math.abs(v).toLocaleString()+"K"}}
   });
   chartInstance.render();
 }
@@ -366,22 +292,28 @@ async function loadMarketFlow(){
     const data=await r.json();
     if(!Array.isArray(data)||!data.length)throw new Error("empty");
     const last90=data.slice(-90);
-    const dates=last90.map(x=>x.date);
-    const buys=last90.map(x=>Math.round((x.buy_value||0)/1e6));
-    const sells=last90.map(x=>-Math.round((x.sell_value||0)/1e6));
+    // populate US Market Summary cards
+    const totalBuy  =last90.reduce((s,x)=>s+(x.buy_value||0),0);
+    const totalSell =last90.reduce((s,x)=>s+(x.sell_value||0),0);
+    const totalBuys =last90.reduce((s,x)=>s+(x.buy_count||0),0);
+    const totalSells=last90.reduce((s,x)=>s+(x.sell_count||0),0);
+    const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+    set("m-total",(totalBuys+totalSells).toLocaleString());
+    set("m-buys",totalBuys.toLocaleString());
+    set("m-sells",totalSells.toLocaleString());
+    set("m-buytotal",money(totalBuy));
+    set("m-selltotal",money(totalSell));
+    // render chart
     el.innerHTML="";
     if(marketChart){try{marketChart.destroy();}catch(e){}}
     marketChart=new ApexCharts(el,{
-      series:[{name:"Buy ($M)",data:buys},{name:"Sell ($M)",data:sells}],
+      series:[{name:"Buy ($M)",data:last90.map(x=>Math.round((x.buy_value||0)/1e6))},{name:"Sell ($M)",data:last90.map(x=>-Math.round((x.sell_value||0)/1e6))}],
       chart:{type:"bar",stacked:true,height:220,background:"transparent",toolbar:{show:false},animations:{enabled:false}},
-      colors:["#3fb950","#f85149"],
-      plotOptions:{bar:{columnWidth:"85%",borderRadius:1}},
-      dataLabels:{enabled:false},
-      xaxis:{categories:dates,labels:{show:false},axisBorder:{color:"#30363d"}},
+      colors:["#3fb950","#f85149"],plotOptions:{bar:{columnWidth:"85%",borderRadius:1}},dataLabels:{enabled:false},
+      xaxis:{categories:last90.map(x=>x.date),labels:{show:false},axisBorder:{color:"#30363d"}},
       yaxis:{labels:{style:{colors:"#8b949e",fontSize:"11px",fontFamily:"monospace"},formatter:v=>(v>=0?"+$":"-$")+Math.abs(v)+"M"}},
-      grid:{borderColor:"#30363d",strokeDashArray:3},
-      legend:{labels:{colors:"#8b949e",fontFamily:"monospace"},position:"top"},
-      tooltip:{theme:"dark",x:{formatter:(_,opts)=>dates[opts.dataPointIndex]},y:{formatter:v=>"$"+Math.abs(v).toLocaleString()+"M"}}
+      grid:{borderColor:"#30363d",strokeDashArray:3},legend:{labels:{colors:"#8b949e",fontFamily:"monospace"},position:"top"},
+      tooltip:{theme:"dark",x:{formatter:(_,o)=>last90[o.dataPointIndex].date},y:{formatter:v=>"$"+Math.abs(v).toLocaleString()+"M"}}
     });
     marketChart.render();
   }catch(e){
@@ -402,7 +334,7 @@ function renderSignalCards(trades,containerId,filterFn){
     if(t.type==="SELL"&&(t.shares_after==="0"||parseFloat(t.shares_after)===0))flags.push(`<span class="flag d">🚨 Zero shares after</span>`);
     if(t._streak>=3)flags.push(`<span class="flag g">📈 ${t._streak}-day streak</span>`);
     else if(t._streak===2)flags.push(`<span class="flag g">📈 2-day</span>`);
-    return`<div class="sc"><div class="sc-head"><div><div class="sc-ticker">${t.ticker}</div><div class="sc-company">${t.company||""}</div></div><span class="sig-badge ${sig.cls}">${sig.label}</span></div><div><div class="sc-insider">${t.insider||"–"}</div><div class="sc-role">${t.role||"–"}</div></div><div class="sc-metrics"><div class="sc-metric"><div class="mk">Shares</div><div class="mv">${fmtNum(t.shares)}</div></div><div class="sc-metric"><div class="mk">Price</div><div class="mv">${fmtPx(t.price)}</div></div><div class="sc-metric"><div class="mk">Total</div><div class="mv" style="color:${t.type==="BUY"?"var(--accent-green)":"var(--accent-red)"}">${money(t.total_value)}</div></div><div class="sc-metric"><div class="mk">Date</div><div class="mv">${fmtDate(t.txn_date)}</div></div></div>${flags.length?`<div class="sc-flags">${flags.join("")}</div>`:""}<div class="sc-commentary">${commentary(t,sig)}</div></div>`;
+    return`<div class="sc"><div class="sc-head"><div><div class="sc-ticker">${t.ticker}</div><div class="sc-company">${t.company||""}</div></div><span class="sig-badge ${sig.cls}">${sig.label}</span></div><div><div class="sc-insider">${t.insider||"–"}</div><div class="sc-role">${t.role||"–"}</div></div><div class="sc-metrics"><div class="sc-metric"><div class="mk">Shares</div><div class="mv">${fmtNum(t.shares)}</div></div><div class="sc-metric"><div class="mk">Price</div><div class="mv">${fmtPx(t.price)}</div></div><div class="sc-metric"><div class="mk">Total</div><div class="mv" style="color:${t.type==="BUY"?"var(--accent-green)":"var(--accent-red)"}">${money(t.total_value)}</div></div><div class="sc-metric"><div class="mk">Date</div><div class="mv">${fmtDate(t.txn_date)}</div></div></div>${flags.length?`<div class="sc-flags">${flags.join("")}</div>`:""}<div class="sc-commentary">${commentary(t)}</div></div>`;
   }).join("");
 }
 
@@ -415,19 +347,14 @@ async function load(){
     document.getElementById("updated").textContent=ts;
     document.getElementById("footer-updated").textContent="Generated "+ts;
     buildClusters(ALL);buildStreaks(ALL);
-    ALL.forEach(t=>{t._sigScore=scoreSignal(t).score;});
     const buys=ALL.filter(t=>t.type==="BUY"),sells=ALL.filter(t=>t.type==="SELL");
     const tickers=new Set(ALL.map(t=>t.ticker));
     document.getElementById("s-total").textContent=ALL.length;
     document.getElementById("s-buys").textContent=buys.length;
     document.getElementById("s-sells").textContent=sells.length;
     document.getElementById("s-tickers").textContent=tickers.size;
-    document.getElementById("s-bigbuy").textContent=money(buys.reduce((m,t)=>Math.max(m,t.total_value||0),0));
-    document.getElementById("s-bigsell").textContent=money(sells.reduce((m,t)=>Math.max(m,t.total_value||0),0));
-    document.getElementById("b-total").textContent=ALL.length+" trades";
-    document.getElementById("b-buys").textContent=buys.length+" buys";
-    document.getElementById("b-sells").textContent=sells.length+" sells";
-    document.getElementById("b-tickers").textContent=tickers.size+" tickers";
+    document.getElementById("s-buytotal").textContent=money(buys.reduce((s,t)=>s+(t.total_value||0),0));
+    document.getElementById("s-selltotal").textContent=money(sells.reduce((s,t)=>s+(t.total_value||0),0));
     buildPortfolioGrid();
     renderSignalCards(ALL,"signal-cards",({t,sig})=>Math.abs(sig.score)>=1.5||(t._cluster&&t._clusterCount>=2));
     renderSignalCards(ALL,"cluster-cards",({t})=>(t._cluster&&t._clusterCount>=2)||(t._streak&&t._streak>=2));
