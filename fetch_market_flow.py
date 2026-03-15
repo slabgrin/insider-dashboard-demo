@@ -4,7 +4,7 @@ Fetch US market insider buy/sell flow from SEC quarterly Form 3/4/5 datasets.
 SEC publishes data with a ~1 quarter lag — we use the last 2 completed quarters.
 Confirmed URL: https://www.sec.gov/files/structureddata/data/
                insider-transactions-data-sets/{year}q{quarter}_form345.zip
-Writes market_flow.json with daily buy/sell for last 90 days.
+Writes market_flow.json with daily buy/sell counts + values for last 90 days.
 """
 import requests, json, zipfile, io, csv
 from datetime import datetime, timedelta
@@ -19,7 +19,6 @@ def completed_quarters(n=2):
     today = datetime.utcnow()
     current_q = (today.month - 1) // 3 + 1
     current_y = today.year
-    # step back one quarter to get the most recent completed one
     q, y = current_q - 1, current_y
     if q == 0:
         q, y = 4, y - 1
@@ -29,7 +28,7 @@ def completed_quarters(n=2):
         q -= 1
         if q == 0:
             q, y = 4, y - 1
-    return pairs  # most recent first
+    return pairs
 
 def fetch_zip(year, qtr):
     url = f"{BASE_URL}/{year}q{qtr}_form345.zip"
@@ -65,12 +64,12 @@ def parse_nonderiv(zip_bytes):
                     acq  = (row.get("TRANS_ACQUIRED_DISP_CD","") or row.get("acquiredDisposedCode","")).strip().upper()
                     sh   = float((row.get("TRANS_SHARES","") or row.get("transactionShares","") or "0").replace(",","") or 0)
                     px   = float((row.get("TRANS_PRICE_PER_SHARE","") or row.get("transactionPricePerShare","") or "0").replace(",","") or 0)
-                    val  = sh * px
+                    val  = sh * px  # may be 0 if price not reported — counted anyway
                     if not date or len(date) != 10: continue
                     if code == "P" or (acq == "A" and code not in ("A","M","X","V","I","F","D","G","W")):
-                        rows.append({"date": date, "buy": val, "sell": 0})
+                        rows.append({"date": date, "is_buy": True,  "value": val})
                     elif code == "S" or (acq == "D" and code not in ("F","D","G","W","A","M","X")):
-                        rows.append({"date": date, "buy": 0, "sell": val})
+                        rows.append({"date": date, "is_buy": False, "value": val})
                 except: continue
     print(f"  {len(rows):,} rows parsed")
     return rows
