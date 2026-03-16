@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-16 08:00 UTC",
+  "updated_at": "2026-03-16 22:46 UTC",
   "trades": [
     {
       "ticker": "GOOGL",
@@ -18,6 +18,24 @@
       "txn_date": "2027-01-25",
       "filing_date": "2026-01-27",
       "shares_after": "9517"
+    },
+    {
+      "ticker": "MSFT",
+      "company": "MICROSOFT CORP",
+      "insider": "Coleman Amy",
+      "role": "EVP, Chief Human Resources Off",
+      "type": "SELL",
+      "txn_code": "F",
+      "txn_label": "Tax Withholding",
+      "txn_category": "tax",
+      "shares": 31.095,
+      "price": 395.55,
+      "total_value": 12299.63,
+      "security": "Common Stock",
+      "is_derivative": false,
+      "txn_date": "2026-03-16",
+      "filing_date": "2026-03-16",
+      "shares_after": "48576.5643"
     },
     {
       "ticker": "MSFT",
