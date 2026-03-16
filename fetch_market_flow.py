@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
 Fetch US market insider buy/sell flow from SEC quarterly Form 3/4/5 datasets.
-Counts every open-market buy (P) and sell (S) transaction regardless of whether
-price was reported. Dollar values captured only when price is available.
 """
 import requests, json, zipfile, io, csv
 from datetime import datetime, timedelta
@@ -41,17 +39,19 @@ def fetch_zip(year, qtr):
         print(f"  Error: {e}"); return None
 
 def normalise_date(raw):
-    """Convert any date string to YYYY-MM-DD. Returns '' if unparseable."""
     s = raw.strip()
-    # Already YYYY-MM-DD
-    if len(s) >= 10 and s[4] == "-" and s[7] == "-":
+    if not s:
+        return ""
+    # YYYY-MM-DD or YYYY-MM-DD HH:MM:SS
+    if len(s) >= 10 and s[4:5] == "-" and s[7:8] == "-":
         return s[:10]
     # MM/DD/YYYY
-    if len(s) >= 10 and s[2] == "/" and s[5] == "/":
+    if len(s) >= 10 and s[2:3] == "/" and s[5:6] == "/":
         p = s[:10].split("/")
-        return f"{p[2]}-{p[0]}-{p[1]}"
-    # YYYYMMDD (no separators)
-    if len(s) >= 8 and s.isdigit():
+        if len(p) == 3:
+            return f"{p[2]}-{p[0]}-{p[1]}"
+    # YYYYMMDD
+    if len(s) >= 8 and s[:8].isdigit():
         return f"{s[:4]}-{s[4:6]}-{s[6:8]}"
     return ""
 
@@ -64,29 +64,50 @@ def parse_nonderiv(zip_bytes):
         if not tsv:
             print("  NONDERIV_TRANS not found in archive"); return rows
         print(f"  Parsing: {tsv}")
-        sample_dates = []
         with z.open(tsv) as fh:
             reader = csv.DictReader(
                 io.TextIOWrapper(fh, encoding="utf-8", errors="replace"),
                 delimiter="\t"
             )
+            # Print headers so we know exact column names
+            headers = reader.fieldnames
+            print(f"  Columns: {headers[:10] if headers else None}")
+            first_err = None
+            date_col = None
+            code_col = None
+            acq_col  = None
+            sh_col   = None
+            px_col   = None
+            if headers:
+                for h in headers:
+                    hl = h.lower().replace("_","")
+                    if hl in ("transdate","transactiondate") and date_col is None: date_col = h
+                    if hl in ("transcode","transactioncode") and code_col is None: code_col = h
+                    if hl in ("transacquireddispcd","acquireddisposedcode") and acq_col is None: acq_col = h
+                    if hl in ("transshares","transactionshares") and sh_col is None: sh_col = h
+                    if hl in ("transpricepershare","transactionpricepershare") and px_col is None: px_col = h
+            print(f"  Detected cols — date:{date_col} code:{code_col} acq:{acq_col} shares:{sh_col} price:{px_col}")
             for row in reader:
                 try:
-                    raw_date = (row.get("TRANS_DATE","") or row.get("transactionDate",""))
+                    raw_date = row.get(date_col or "TRANS_DATE", "") or row.get("transactionDate", "")
                     date = normalise_date(raw_date)
                     if not date or len(date) != 10: continue
-                    if len(sample_dates) < 3: sample_dates.append(raw_date.strip()[:12])
-                    code = (row.get("TRANS_CODE","") or row.get("transactionCode","")).strip().upper()
-                    acq  = (row.get("TRANS_ACQUIRED_DISP_CD","") or row.get("acquiredDisposedCode","")).strip().upper()
-                    sh   = float((row.get("TRANS_SHARES","") or row.get("transactionShares","") or "0").replace(",","") or 0)
-                    px   = float((row.get("TRANS_PRICE_PER_SHARE","") or row.get("transactionPricePerShare","") or "0").replace(",","") or 0)
+                    code = (row.get(code_col or "TRANS_CODE","") or row.get("transactionCode","")).strip().upper()
+                    acq  = (row.get(acq_col  or "TRANS_ACQUIRED_DISP_CD","") or row.get("acquiredDisposedCode","")).strip().upper()
+                    sh   = float((row.get(sh_col or "TRANS_SHARES","") or row.get("transactionShares","") or "0").replace(",","") or 0)
+                    px   = float((row.get(px_col or "TRANS_PRICE_PER_SHARE","") or row.get("transactionPricePerShare","") or "0").replace(",","") or 0)
                     val  = sh * px
                     if code == "P" or (acq == "A" and code not in ("A","M","X","V","I","F","D","G","W")):
                         rows.append({"date": date, "is_buy": True,  "value": val})
                     elif code == "S" or (acq == "D" and code not in ("F","D","G","W","A","M","X")):
                         rows.append({"date": date, "is_buy": False, "value": val})
-                except: continue
-        print(f"  {len(rows):,} rows parsed  |  sample raw dates: {sample_dates}")
+                except Exception as e:
+                    if first_err is None:
+                        first_err = str(e)
+                    continue
+            if first_err:
+                print(f"  First exception in rows: {first_err}")
+    print(f"  {len(rows):,} rows parsed")
     return rows
 
 def main():
@@ -106,20 +127,20 @@ def main():
         if row["date"] < cutoff: continue
         d = by_date[row["date"]]
         if row["is_buy"]:
-            d["buy_count"]  += 1          # always count
+            d["buy_count"]  += 1
             d["buy_value"]  += row["value"]
         else:
-            d["sell_count"] += 1          # always count
+            d["sell_count"] += 1
             d["sell_value"] += row["value"]
 
     series = [{"date": dt, **v} for dt, v in sorted(by_date.items())]
     with open("market_flow.json","w") as fh:
         json.dump(series, fh, indent=2)
 
-    total_buy   = sum(x["buy_value"]  for x in series)
-    total_sell  = sum(x["sell_value"] for x in series)
     total_buys  = sum(x["buy_count"]  for x in series)
     total_sells = sum(x["sell_count"] for x in series)
+    total_buy   = sum(x["buy_value"]  for x in series)
+    total_sell  = sum(x["sell_value"] for x in series)
     print(f"\nDone — {len(series)} days written to market_flow.json")
     print(f"  Buy trades:  {total_buys:,}")
     print(f"  Sell trades: {total_sells:,}")
