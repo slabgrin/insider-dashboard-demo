@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 """
 Fetch US market insider buy/sell flow from SEC quarterly Form 3/4/5 datasets.
-SEC publishes data with a ~1 quarter lag — we use the last 2 completed quarters.
-Confirmed URL: https://www.sec.gov/files/structureddata/data/
-               insider-transactions-data-sets/{year}q{quarter}_form345.zip
-Writes market_flow.json with daily buy/sell for last 90 days.
+Writes market_flow.json with daily buy_count / sell_count for the last 90 days.
 """
 import requests, json, zipfile, io, csv
 from datetime import datetime, timedelta
@@ -15,21 +12,22 @@ BASE_URL = "https://www.sec.gov/files/structureddata/data/insider-transactions-d
 LOOKBACK = 90
 
 def completed_quarters(n=2):
-    """Return the last n COMPLETED quarters (never the current in-progress quarter)."""
     today = datetime.utcnow()
-    current_q = (today.month - 1) // 3 + 1
-    current_y = today.year
-    # step back one quarter to get the most recent completed one
-    q, y = current_q - 1, current_y
+    q = (today.month - 1) // 3          # 0-based current quarter
+    y = today.year
+    # step back to last completed quarter
     if q == 0:
         q, y = 4, y - 1
+    else:
+        q = q  # q is already the last completed quarter (0-based → 1-based: same)
+    # build list
     pairs = []
     for _ in range(n):
         pairs.append((y, q))
         q -= 1
         if q == 0:
             q, y = 4, y - 1
-    return pairs  # most recent first
+    return pairs
 
 def fetch_zip(year, qtr):
     url = f"{BASE_URL}/{year}q{qtr}_form345.zip"
@@ -60,27 +58,21 @@ def parse_nonderiv(zip_bytes):
             )
             for row in reader:
                 try:
-                    _raw = (row.get("TRANS_DATE","") or row.get("transactionDate","")).strip()
-                    # Normalise to YYYY-MM-DD regardless of source format
-                    if len(_raw) >= 10:
-                        _s = _raw[:10]
-                        if _s[2] == "/" and _s[5] == "/":  # MM/DD/YYYY
-                            _p = _s.split("/")
-                            _s = f"{_p[2]}-{_p[0]}-{_p[1]}"
-                        date = _s
-                    else:
-                        date = ""
+                    # Date: keep original [:10] approach that reliably gives 30k+ rows
+                    date = (row.get("TRANS_DATE","") or row.get("transactionDate","")).strip()[:10]
+                    if not date or len(date) != 10:
+                        continue
                     code = (row.get("TRANS_CODE","") or row.get("transactionCode","")).strip().upper()
                     acq  = (row.get("TRANS_ACQUIRED_DISP_CD","") or row.get("acquiredDisposedCode","")).strip().upper()
                     sh   = float((row.get("TRANS_SHARES","") or row.get("transactionShares","") or "0").replace(",","") or 0)
                     px   = float((row.get("TRANS_PRICE_PER_SHARE","") or row.get("transactionPricePerShare","") or "0").replace(",","") or 0)
                     val  = sh * px
-                    if not date or len(date) != 10: continue
                     if code == "P" or (acq == "A" and code not in ("A","M","X","V","I","F","D","G","W")):
-                        rows.append({"date": date, "buy": val, "sell": 0})
+                        rows.append({"date": date, "is_buy": True,  "value": val})
                     elif code == "S" or (acq == "D" and code not in ("F","D","G","W","A","M","X")):
-                        rows.append({"date": date, "buy": 0, "sell": val})
-                except: continue
+                        rows.append({"date": date, "is_buy": False, "value": val})
+                except:
+                    continue
     print(f"  {len(rows):,} rows parsed")
     return rows
 
@@ -96,24 +88,30 @@ def main():
         if raw:
             all_rows.extend(parse_nonderiv(raw))
 
-    by_date = defaultdict(lambda: {"buy_value":0.0,"sell_value":0.0,"buy_count":0,"sell_count":0})
+    by_date = defaultdict(lambda: {"buy_count":0,"sell_count":0,"buy_value":0.0,"sell_value":0.0})
     for row in all_rows:
-        if row["date"] < cutoff: continue
+        if row["date"] < cutoff:
+            continue
         d = by_date[row["date"]]
-        d["buy_value"]  += row["buy"]
-        d["sell_value"] += row["sell"]
-        if row["buy"]  > 0: d["buy_count"]  += 1
-        if row["sell"] > 0: d["sell_count"] += 1
+        if row["is_buy"]:
+            d["buy_count"]  += 1       # count every buy, price optional
+            d["buy_value"]  += row["value"]
+        else:
+            d["sell_count"] += 1       # count every sell, price optional
+            d["sell_value"] += row["value"]
 
     series = [{"date": dt, **v} for dt, v in sorted(by_date.items())]
-    with open("market_flow.json","w") as fh:
+    with open("market_flow.json", "w") as fh:
         json.dump(series, fh, indent=2)
 
-    total_buy  = sum(x["buy_value"]  for x in series)
-    total_sell = sum(x["sell_value"] for x in series)
+    total_buys  = sum(x["buy_count"]  for x in series)
+    total_sells = sum(x["sell_count"] for x in series)
     print(f"\nDone — {len(series)} days written to market_flow.json")
-    print(f"  Total buy:  ${total_buy/1e9:.2f}B")
-    print(f"  Total sell: ${total_sell/1e9:.2f}B")
+    print(f"  Buy trades:  {total_buys:,}")
+    print(f"  Sell trades: {total_sells:,}")
+    if series:
+        print(f"  Date range: {series[0]['date']} → {series[-1]['date']}")
+        print(f"  Sample: {series[-1]}")
 
 if __name__ == "__main__":
     main()
